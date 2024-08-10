@@ -1,0 +1,4 @@
+[submodule "https://github.com/Krico16/curly-tribble.git"]
+	url = gateway-service
+[submodule "https://github.com/Krico16/animated-enigma.git"]
+	url = auth-service
