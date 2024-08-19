@@ -4,3 +4,9 @@
 [submodule "auth-service"]
   path = auth-service
 	url = https://github.com/Krico16/animated-enigma.git
+[submodule "data-service"]
+	path = data-service
+	url = https://github.com/Krico16/laughing-adventure.git
+[submodule "nest-lib"]
+	path = nest-lib
+	url = https://github.com/Krico16/musical-enigma.git

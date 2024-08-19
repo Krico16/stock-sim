@@ -22,7 +22,8 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-  db:
+
+  pg_db:
     image: postgres:latest
     environment:
       POSTGRES_USER: admin
@@ -32,3 +33,44 @@ services:
       - "3306:3306"
     volumes:
       - ./data:/var/lib/mysql
+
+  mg_db:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data:/data
+
+  influx:
+    image: influxdb:latest
+    environment:
+      DOCKER_INFLUXDB_INIT_MODE: setup
+      DOCKER_INFLUXDB_INIT_USERNAME: admin
+      DOCKER_INFLUXDB_INIT_PASSWORD: password 
+      DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: AdminToken
+      DOCKER_INFLUXDB_INIT_ORG: docs 
+      DOCKER_INFLUXDB_INIT_BUCKET: ticker_prices
+    ports:
+      - "8086:8086"
+    volumes:
+      - type: volume
+        source: influxdb2-data
+        target: /var/lib/influxdb2
+      - type: volume
+        source: influxdb2-config
+        target: /etc/influxdb2
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./data:/data
+
+volumes:
+  influxdb2-data:
+  influxdb2-config:
+
